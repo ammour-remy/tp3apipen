@@ -5,15 +5,20 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 use Faker\Factory;
 use App\Entity\Pen;
 use App\Entity\Type;
 use App\Entity\Material;
 use App\Entity\Color;
 use App\Entity\Brand;
+use App\Entity\User;
 
 class AppFixtures extends Fixture
 {
+    public function __construct(private UserPasswordHasherInterface $passwordEncoder)
+    {}
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
@@ -73,6 +78,15 @@ class AppFixtures extends Fixture
 
             $manager->persist($pen);
         }
+        $user = new User();
+        $user->setEmail('demo@apipen.fr');
+        $user->setRoles([]);
+        $user->setPassword($this->passwordEncoder->hashPassword(
+            $user,
+            'azerty'
+        ));
+
+        $manager->persist($user);
 
         $manager->flush();
     }

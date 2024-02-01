@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/api')]
+#[Security(name: 'Bearer')]
 class PenController extends AbstractController
 {
     #[Route('/pens', name: 'app_pens', methods: ['GET'])]
