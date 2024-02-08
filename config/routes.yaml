@@ -6,9 +6,14 @@ controllers:
 
 api_login_check:
     path: /api/login_check
-    stateless: false
+    stateless: true
 
 app.swagger_ui:
     path: /api/doc
     methods: GET
     defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+
+
+dashboard:
+    path: /admin
+    controller: App\Controller\DashboardController::index
